@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 interface props {
   _id: number;
   name: string;
-  totalQuestions: number;
+  totalQuestions?: number;
   showCount?: boolean;
 }
 const RenderTag = ({ _id, name, totalQuestions, showCount }: props) => {

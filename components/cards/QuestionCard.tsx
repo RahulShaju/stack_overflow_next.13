@@ -60,28 +60,28 @@ const QuestionCard = ({
           title={`asked ${getTimeStamp(createdAt)}`}
           href={`/profile/${author._id}`}
           isAuthor
-          textStyles="body-medium tex-dark400_light700"
+          textStyles="body-medium text-dark400_light700"
         />
         <Metric
           imgUrl="/assets/icons/like.svg"
           alt="upvotes"
           value={convertNumbers(upvotes)}
           title="Votes"
-          textStyles="small-medium tex-dark400_light800"
+          textStyles="small-medium text-dark400_light800"
         />
         <Metric
           imgUrl="/assets/icons/message.svg"
           alt="message"
           value={answers.length}
           title="Answers"
-          textStyles="small-medium tex-dark400_light800"
+          textStyles="small-medium text-dark400_light800"
         />
         <Metric
           imgUrl="/assets/icons/eye.svg"
           alt="Eye"
           value={convertNumbers(views)}
           title="Views"
-          textStyles="small-medium tex-dark400_light800"
+          textStyles="small-medium text-dark400_light800"
         />
       </div>
     </div>

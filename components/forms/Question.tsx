@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,24 +19,33 @@ import { Input } from "@/components/ui/input";
 
 import { questionSchema } from "@/lib/validations";
 import Image from "next/image";
+import { type } from "os";
 
 const Question = () => {
+  const type: any = "create";
   const editorRef = useRef(null);
-
+  const [isSubmitting, setIssubmitting] = useState(false);
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
       title: "",
       explanation: "",
-      tags: [""],
+      tags: [],
     },
   });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof questionSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    setIssubmitting(true);
+    try {
+      // make an async call to your api -> to create a question
+      // contain all form data
+      // navigate to home page
+    } catch (error) {
+    } finally {
+      setIssubmitting(false);
+    }
     console.log(values);
   }
   const handleInputKeyDown = (
@@ -160,7 +169,7 @@ const Question = () => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Question Title <span className="text-primary-500">*</span>
+                Tags <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <>
@@ -175,12 +184,12 @@ const Question = () => {
                     <div className="flex-start mt-2.5 gap-2.5">
                       {field.value.map((tag: any) => (
                         <Badge
+                          onClick={() => handleTagRemove(tag, field)}
                           className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center  gap-2 rounded-md border-none px-4 py-2 capitalize"
                           key={tag}
                         >
                           {tag}
                           <Image
-                            onClick={() => handleTagRemove(tag, field)}
                             src="/assets/icons/close.svg"
                             alt="Close icon"
                             width={12}
@@ -202,7 +211,17 @@ const Question = () => {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          className="primary-gradient w-fit !text-light-900"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <> {type === "edit" ? "Editing.." : "Posting.."}</>
+          ) : (
+            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
+          )}
+        </Button>
       </form>
     </Form>
   );
